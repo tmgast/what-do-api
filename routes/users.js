@@ -24,4 +24,13 @@ router.get('/:id', function(req, res, next) {
   res.json(user);
 });
 
+router.post('/users', function(req, res, next) {
+  const user = {
+    id: req.body.id,
+    name: req.body.name
+  };
+
+  res.json(user);
+});
+
 module.exports = router;
