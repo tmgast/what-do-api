@@ -1,16 +1,17 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var LocationsSchema = new Schema({
+const { Schema } = mongoose;
+
+const LocationsSchema = new Schema({
   id: String,
   name: String,
   latitude: String,
   longitude: String,
   url: String,
-  rating: {type: Number, default: 0}
+  rating: { type: Number, default: 0 },
 });
 
-var LocationsModel = mongoose.model(
-  'LocationsModel', 
-  LocationsSchema
+const LocationsModel = mongoose.model(
+  'LocationsModel',
+  LocationsSchema,
 );

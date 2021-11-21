@@ -1,33 +1,35 @@
-var express = require('express');
-var router = express.Router();
-var createError = require('http-errors');
+const express = require('express');
+const createError = require('http-errors');
+
+const router = express.Router();
 
 const users = [{
-  id: "1",
-  name: "bob",
-  id: "2",
-  name: "jim"
+  id: '1',
+  name: 'bob',
+}, {
+  id: '2',
+  name: 'jim',
 }];
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res) => {
   res.json(users);
 });
 
 /* GET users listing. */
-router.get('/:id', function(req, res, next) {
-  const user = users.find(user => user.id === id);
-  if(!user){
-    next(createError(404, "Not Found"));
+router.get('/:id', (req, res, next) => {
+  const user = users.find((u) => u.id === req.id);
+  if (!user) {
+    next(createError(404, 'Not Found'));
   }
 
   res.json(user);
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', (req, res) => {
   const user = {
     id: req.body.id,
-    name: req.body.name
+    name: req.body.name,
   };
 
   res.json(user);
