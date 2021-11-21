@@ -34,3 +34,32 @@ describe('users endpoints',() => {
   it('PUT /users/id --> update User', () => {});
 
 });
+
+describe('locations endpoints',() => {
+  it('GET /locations --> array locations', () => {
+    return request(app)
+      .get('/locations')
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then(response => {
+        expect(response.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              name: expect.any(String),
+              id: expect.any(String)
+            })
+        ]))
+      })
+  });
+
+  it('GET /locations/:id --> specific Location Object', () => {});
+
+  it('GET /locations/:id --> 404 when not found', () => {});
+
+  it('POST /locations --> created location', () => {});
+
+  it('GET /locations --> ', () => {});
+
+  it('PUT /locations/:id --> update Location', () => {});
+
+});

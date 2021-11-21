@@ -2,35 +2,36 @@ var express = require('express');
 var router = express.Router();
 var createError = require('http-errors');
 
-const users = [{
+const locations = [{
   id: "1",
   name: "bob",
   id: "2",
   name: "jim"
 }];
 
-/* GET users listing. */
+/* GET Locations listing. */
 router.get('/', function(req, res, next) {
-  res.json(users);
+  res.json(locations);
 });
 
-/* GET users listing. */
+/* GET Location listing. */
 router.get('/:id', function(req, res, next) {
-  const user = users.find(user => user.id === id);
-  if(!user){
+  const locations = locations.find(location => location.id === id);
+  if(!location){
     next(createError(404, "Not Found"));
   }
 
-  res.json(user);
+  res.json(location);
 });
 
 router.post('/', function(req, res, next) {
-  const user = {
+  const location = {
     id: req.body.id,
     name: req.body.name
   };
 
-  res.json(user);
+  res.json(location);
 });
 
 module.exports = router;
+
