@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const { Schema } = mongoose;
 
-const LocationsSchema = new Schema({
+const LocationSchema = new Schema({
   id: { type: String, default: uuidv4() },
   name: String,
   latitude: String,
@@ -12,4 +12,4 @@ const LocationsSchema = new Schema({
   rating: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model('LocationsModel', LocationsSchema);
+module.exports = mongoose.model('Location', LocationSchema);
