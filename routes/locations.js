@@ -1,5 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
+const LocationsModel = require('../models/locations');
 
 const router = express.Router();
 
@@ -13,7 +14,9 @@ const locations = [{
 
 /* GET Locations listing. */
 router.get('/', (req, res) => {
-  res.json(locations);
+  const query = LocationsModel.find();
+  const results = query.exec();
+  res.json(results);
 });
 
 /* GET Location listing. */
