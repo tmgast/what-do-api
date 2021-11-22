@@ -1,7 +1,27 @@
 const faker = require('faker');
-const db = require('../middleware/db');
+const { getConnection } = require('../middleware/db');
+const dotenv = require('dotenv');
+
+dotenv.config();
+if(process.env.ENV !== 'dev'){
+  throw new Error('Incorrect environment! Seeders should only be used in DEV');
+}
 
 const Location = require('../models/locations');
+
+// Empty Location Collection
+async function purge(){
+  await Location.deleteMany({});
+}
+
+// seed new data
+async function seed(seeds) {
+  Location.collection.insertMany(locationSeeds)
+    .then(function(){
+      getConnection().close();
+    });
+}
+
 
 const locationSeeds = [];
 locationSeeds.push(
@@ -10,7 +30,7 @@ locationSeeds.push(
     type: 'landmark',
     latitude: '34.6864842',
     longitude: '135.5240135',
-    url: faker.internet.url,
+    url: "https://www.google.com/maps/place/Osaka+Castle/@34.6864842,135.5240135,14z/data=!4m5!3m4!1s0x6000e0cd5c283afd:0xf01d07d5ca11e"
   }),
 );
 
@@ -20,7 +40,7 @@ locationSeeds.push(
     type: 'music',
     latitude: '34.7014543',
     longitude: '135.4845376',
-    url: faker.internet.url,
+    url: "https://www.google.com/maps/place/The+Symphony+Hall/@34.7014543,135.4845376,17z/data=!3m1!5s0x6000e68a9b325373:0xd37aa5395c66",
   }),
 );
 
@@ -30,14 +50,9 @@ locationSeeds.push(
     type: 'park',
     latitude: '34.6664671',
     longitude: '135.4332258',
-    url: faker.internet.url,
+    url: "https://www.google.com/maps/place/Universal+Studios+Japan/@34.6664671,135.4332258,15.65z/data=!4m5!3m4!1s0x6000e0d083d5e25d:0x3605fe25303252aa!8m2!3d34.66",
   }),
 );
 
-async function seed(seeds) {
-  for (const location of seeds) {
-    await location.save();
-  }
-}
+purge();
 seed(locationSeeds);
-
