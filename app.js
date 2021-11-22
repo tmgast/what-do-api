@@ -3,6 +3,9 @@ const dotenv = require('dotenv');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const { initDB } = require('./middleware/db');
+
+initDB();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

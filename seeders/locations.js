@@ -1,5 +1,5 @@
 const faker = require('faker');
-const { getConnection } = require('../middleware/db');
+const { initDB, getConnection } = require('../middleware/db');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -7,6 +7,7 @@ if(process.env.ENV !== 'dev'){
   throw new Error('Incorrect environment! Seeders should only be used in DEV');
 }
 
+initDB();
 const Location = require('../models/locations');
 
 // Empty Location Collection

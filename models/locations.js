@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const { Schema } = mongoose;
 
 const LocationSchema = new Schema({
-  id: { type: String, default: uuidv4() },
+  _id: { type: String, default: uuidv4 },
   name: String,
   latitude: String,
   longitude: String,

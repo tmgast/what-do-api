@@ -1,6 +1,4 @@
 const express = require('express');
-const createError = require('http-errors');
-const { getConnection } = require('../middleware/db');
 const Locations = require('../models/locations');
 
 const router = express.Router();
@@ -9,14 +7,8 @@ const router = express.Router();
 router.get('/', (req, res) => Locations.find().then((locs) => res.json(locs)));
 
 /* GET Location listing. */
-router.get('/:id', (req, res, next) => {
-  const location = Locations.find((l) => l.id === req.id);
-  if (!location) {
-    next(createError(404, 'Not Found'));
-  }
-
-  getConnection().close();
-  res.json(location);
+router.get('/:id', (req, res) => {
+  Locations.findById(req.params.id).then((locs) => res.json(locs));
 });
 
 router.post('/', (req, res) => {
