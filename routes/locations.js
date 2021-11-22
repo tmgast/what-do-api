@@ -12,11 +12,28 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const location = {
-    id: req.body.id,
+  const location = new Locations({
     name: req.body.name,
-  };
+    latitude: req.body.lat,
+    longitude: req.body.lon,
+    url: req.body.url,
+  });
 
+  location.save();
+  res.json(location);
+});
+
+router.post('/gm', (req, res) => {
+  const regex = /https:\/\/www.google.com\/maps\/place\/(.*?),.*?\/@(.*?),(.*?),.*/m;
+  const data = regex.exec(req.body.url);
+  const location = new Locations({
+    name: data[1],
+    latitude: data[2],
+    longitude: data[3],
+    url: req.body.url,
+  });
+
+  location.save();
   res.json(location);
 });
 

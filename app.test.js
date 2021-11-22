@@ -46,7 +46,7 @@ describe('locations endpoints',() => {
           expect.arrayContaining([
             expect.objectContaining({
               name: expect.any(String),
-              id: expect.any(String)
+              _id: expect.any(String)
             })
         ]))
       })
