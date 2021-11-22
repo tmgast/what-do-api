@@ -1,31 +1,21 @@
 const express = require('express');
 const createError = require('http-errors');
-const LocationsModel = require('../models/locations');
+const { getConnection } = require('../middleware/db');
+const Locations = require('../models/locations');
 
 const router = express.Router();
 
-const locations = [{
-  id: '1',
-  name: 'bob',
-}, {
-  id: '2',
-  name: 'jim',
-}];
-
 /* GET Locations listing. */
-router.get('/', (req, res) => {
-  const query = LocationsModel.find();
-  const results = query.exec();
-  res.json(results);
-});
+router.get('/', (req, res) => Locations.find().then((locs) => res.json(locs)));
 
 /* GET Location listing. */
 router.get('/:id', (req, res, next) => {
-  const location = locations.find((l) => l.id === req.id);
+  const location = Locations.find((l) => l.id === req.id);
   if (!location) {
     next(createError(404, 'Not Found'));
   }
 
+  getConnection().close();
   res.json(location);
 });
 
