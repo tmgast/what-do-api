@@ -4,7 +4,10 @@ const { v4: uuidv4 } = require('uuid');
 const { initDB } = require('./middleware/db');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
-initDB();
+beforeAll(async () => {
+  db = await MongoMemoryServer.create();
+  return await initDB(db.getUri());
+});
 
 const request = supertest(app);
 
@@ -62,10 +65,9 @@ it('POST /locations --> created location', async () => {
 
 it('GET /locations --> array locations', async () => {
   expect.assertions(2);
-  const data = await request.get('/locations');
-
-  expect(data.status).toBe(200);
-  expect(data.body).toEqual(
+  const response = await request.get('/locations');
+  expect(response.status).toBe(200);
+  expect(response.body).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
         _id: expect.any(String)
@@ -77,14 +79,16 @@ it('GET /locations/:id --> find location', async () => {
   expect.assertions(1);
   await request.get('/locations/'+testUUID)
   .expect(200)
-  .then(res => (expect(res.body).toEqual(location)));
+  .then(res => {
+    expect(res.body._id).toEqual(location._id);
+  });
 });
 
 it('DELETE /locations/:id --> delete location', async () => {
   expect.assertions(1);
   await request.delete('/locations/'+testUUID)
   .expect(200)
-  .then(res => (expect(res.body).toEqual(location)));
+  .then(res => (expect(res.body._id).toEqual(location._id)));
 });
 
 

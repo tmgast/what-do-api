@@ -4,16 +4,12 @@ const mongoose = require('mongoose');
 let db = null;
 
 dotenv.config();
-async function initDB(memDB) {
+const initDB = async function(memDB) {
   if (db !== null) {
     return db;
   }
 
-  let uri = process.env.DB;
-  if (memDB) {
-    const mDB = await memDB.create();
-    uri = mDB.getUri();
-  }
+  let uri = memDB || process.env.DB;
 
   await mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -24,4 +20,4 @@ async function initDB(memDB) {
   return db;
 }
 
-module.exports = { initDB };
+module.exports.initDB = initDB;

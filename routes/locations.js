@@ -3,10 +3,10 @@ const Locations = require('../models/locations');
 const { initDB } = require('../middleware/db');
 
 const router = express.Router();
-initDB();
 
 /* GET Locations listing. */
 router.get('/', async (req, res, next) => {
+  initDB();
   try {
     const locs = await Locations.find();
     res.send(locs);
@@ -33,6 +33,7 @@ router.delete('/:id/byName', (req, res) => {
 
 router.post('/', (req, res) => {
   const location = new Locations({
+    _id: req.body._id || null,
     name: req.body.name,
     latitude: req.body.lat,
     longitude: req.body.lon,
