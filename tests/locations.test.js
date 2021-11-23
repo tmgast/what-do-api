@@ -1,50 +1,8 @@
-const app = require('./app');
+const { getDBInstance } = require('../middleware/db');
 const supertest = require('supertest');
 const { v4: uuidv4 } = require('uuid');
-const { initDB } = require('./middleware/db');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-
-beforeAll(async () => {
-  if(process.env.SYSTEM === 'android') {
-    initDB();
-  }else{
-    db = await MongoMemoryServer.create();
-    return await initDB(db.getUri());
-  }
-});
-
+const app = require('../app');
 const request = supertest(app);
-
-it('should run', async () => {
-  await request.get('/').expect(200)
-});
-
-
-// Users group
-it('GET /users --> array users', async () => {
-  await request.get('/users')
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .then(response => {
-      expect(response.body).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: expect.any(String),
-            id: expect.any(String)
-          })
-      ]))
-    })
-});
-
-it('GET /users/id --> specific User Object', () => {});
-
-it('GET /users/id --> 404 when not found', () => {});
-
-it('POST /users --> created User', () => {});
-
-it('GET /users --> ', () => {});
-
-it('PUT /users/id --> update User', () => {});
 
 // Locations group
 const testUUID = uuidv4();
@@ -101,3 +59,4 @@ it('GET /locations/:id --> 404 when not found', () => {});
 it('GET /locations --> ', () => {});
 
 it('PUT /locations/:id --> update Location', () => {});
+

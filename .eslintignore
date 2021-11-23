@@ -3,3 +3,4 @@ package-lock.json
 seeders
 migrations
 *.test.js
+tests

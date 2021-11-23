@@ -8,6 +8,9 @@
     "coverage": "jest --collect-coverage --detectOpenHandles"
   },
   "jest": {
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+      ],
     "testEnvironment": "node"
   },
   "config": {

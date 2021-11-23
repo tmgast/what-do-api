@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 let db = null;
 
 dotenv.config();
-const initDB = async function(memDB) {
+const initDB = async function (memDB) {
   if (db !== null) {
     return db;
   }
 
-  let uri = memDB || process.env.DB;
+  const uri = memDB || process.env.DB;
 
   await mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -18,6 +18,13 @@ const initDB = async function(memDB) {
   db = mongoose.connection;
   db.on('error', console.error.bind(console, 'MongoDb connection error:'));
   return db;
-}
+};
+
+const shutdownDB = async function () {
+  await db.close();
+  db = null;
+};
 
 module.exports.initDB = initDB;
+module.exports.shutdownDB = shutdownDB;
+module.exports.getDBInstance = () => mongoose;
