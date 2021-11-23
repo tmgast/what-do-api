@@ -5,8 +5,12 @@ const { initDB } = require('./middleware/db');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 beforeAll(async () => {
-  db = await MongoMemoryServer.create();
-  return await initDB(db.getUri());
+  if(process.env.SYSTEM === 'android') {
+    initDB();
+  }else{
+    db = await MongoMemoryServer.create();
+    return await initDB(db.getUri());
+  }
 });
 
 const request = supertest(app);
