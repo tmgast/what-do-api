@@ -1,14 +1,34 @@
 const express = require('express');
 const Locations = require('../models/locations');
+const { initDB } = require('../middleware/db');
 
 const router = express.Router();
+initDB();
 
 /* GET Locations listing. */
-router.get('/', (req, res) => Locations.find().then((locs) => res.json(locs)));
+router.get('/', async (req, res, next) => {
+  try {
+    const locs = await Locations.find();
+    res.send(locs);
+  } catch {
+    res.status(400);
+    res.send({ error: 'Something broke' });
+  }
+
+  return next;
+});
 
 /* GET Location listing. */
 router.get('/:id', (req, res) => {
   Locations.findById(req.params.id).then((locs) => res.json(locs));
+});
+
+router.delete('/:id', (req, res) => {
+  Locations.findOneAndDelete({ _id: req.params.id }).then((loc) => res.json(loc));
+});
+
+router.delete('/:id/byName', (req, res) => {
+  Locations.deleteMany({ name: req.params.id }).then((loc) => res.json(loc));
 });
 
 router.post('/', (req, res) => {
@@ -24,6 +44,10 @@ router.post('/', (req, res) => {
 });
 
 router.post('/gm', (req, res) => {
+  if (!req.body.url.match('https://www.google.com/maps/place')) {
+    throw new Error('Invalid URL provided');
+  }
+
   const regex = /https:\/\/www.google.com\/maps\/place\/(.*?),.*?\/@(.*?),(.*?),.*/m;
   const data = regex.exec(req.body.url);
   const location = new Locations({
