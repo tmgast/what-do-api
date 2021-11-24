@@ -7,7 +7,7 @@ const request = supertest(app);
 // Locations group
 const testUUID = uuidv4();
 const location = {
-  _id: testUUID,
+  id: testUUID,
   name: "Test",
   lat: "30.000000",
   lon: "40.000000",

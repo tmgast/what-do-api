@@ -19,7 +19,8 @@ router.get('/', async (req, res, next) => {
 });
 
 /* GET Location listing. */
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
+  initDB();
   Locations.findById(req.params.id).then((locs) => res.json(locs));
 });
 
@@ -31,9 +32,10 @@ router.delete('/:id/byName', (req, res) => {
   Locations.deleteMany({ name: req.params.id }).then((loc) => res.json(loc));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+  initDB();
   const location = new Locations({
-    _id: req.body._id || null,
+    id: req.body.id || null,
     name: req.body.name,
     latitude: req.body.lat,
     longitude: req.body.lon,

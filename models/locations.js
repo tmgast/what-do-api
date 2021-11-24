@@ -12,4 +12,10 @@ const LocationSchema = new Schema({
   rating: { type: Number, default: 0 },
 });
 
+LocationSchema.virtual('id').set((value) => {
+  if (value === null) {
+    this._id = uuidv4();
+  }
+});
+
 module.exports = mongoose.model('Location', LocationSchema);

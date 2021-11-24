@@ -17,6 +17,7 @@
           "devDependencies": ["seeders/*.js"]
         }
       ],
+      "no-underscore-dangle": "off",
       "no-console":"off"
     }
 }
