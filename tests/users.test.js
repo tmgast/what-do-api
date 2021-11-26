@@ -1,4 +1,4 @@
-const { getDBInstance } = require('../middleware/db');
+const { getDBInstance } = require('../providers/db');
 const supertest = require('supertest');
 const { v4: uuidv4 } = require('uuid');
 const app = require('../app');

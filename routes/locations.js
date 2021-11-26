@@ -1,12 +1,12 @@
 const express = require('express');
 const Locations = require('../models/locations');
-const { initDB } = require('../middleware/db');
+const { initDB } = require('../providers/db');
 
 const router = express.Router();
+initDB();
 
 /* GET Locations listing. */
 router.get('/', async (req, res, next) => {
-  initDB();
   try {
     const locs = await Locations.find();
     res.send(locs);
@@ -18,22 +18,29 @@ router.get('/', async (req, res, next) => {
   return next;
 });
 
-/* GET Location listing. */
-router.get('/:id', async (req, res) => {
-  initDB();
-  Locations.findById(req.params.id).then((locs) => res.json(locs));
-});
+/* GET Location listing */
+router.route('/:id')
+  .get(async (req, res) => {
+    Locations.findById(req.params.id).then((locs) => res.json(locs));
+  })
 
-router.delete('/:id', (req, res) => {
-  Locations.findOneAndDelete({ _id: req.params.id }).then((loc) => res.json(loc));
-});
+/* PUT Location listing */
+  .put(async (req, res) => {
+    Locations.findById(req.params.id).then((locs) => res.json(locs));
+  })
 
+/* DELETE Location by id */
+  .delete((req, res) => {
+    Locations.findOneAndDelete({ _id: req.params.id }).then((loc) => res.json(loc));
+  });
+
+/* DELETE Location by name */
 router.delete('/:id/byName', (req, res) => {
   Locations.deleteMany({ name: req.params.id }).then((loc) => res.json(loc));
 });
 
+/* POST new Location */
 router.post('/', async (req, res) => {
-  initDB();
   const location = new Locations({
     id: req.body.id || null,
     name: req.body.name,
@@ -46,6 +53,7 @@ router.post('/', async (req, res) => {
   res.json(location);
 });
 
+/* POST new Location parsing Google Maps URL */
 router.post('/gm', (req, res) => {
   if (!req.body.url.match('https://www.google.com/maps/place')) {
     throw new Error('Invalid URL provided');

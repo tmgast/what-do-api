@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const { initDB, shutdownDB, getDBInstance } = require('../middleware/db');
+const { initDB, shutdownDB, getDBInstance } = require('../providers/db');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const app = require('../app');
 const request = supertest(app);
