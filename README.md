@@ -12,14 +12,14 @@ The what-do-api package is the server support the main what-do-app. It manages u
 ## Rooadmap
 
 - [x] Locations
--   [x] GET all
--   [ ] GET by options
--   [x] GET by ID
--   [ ] PUT update by ID
--   [x] POST create
--   [x] POST create by g-maps URL
--   [x] DELETE by ID
--   [ ] GET randomizer
+  - [x] GET all
+  - [ ] GET by options
+  - [x] GET by ID
+  - [ ] PUT update by ID
+  - [x] POST create
+  - [x] POST create by g-maps URL
+  - [x] DELETE by ID
+  - [ ] GET randomizer
 - [ ] Users
 - [ ] Itinerary
 - [ ] Videos
