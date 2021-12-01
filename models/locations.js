@@ -6,6 +6,11 @@ const { Schema } = mongoose;
 const LocationSchema = new Schema({
   _id: { type: String, default: uuidv4 },
   name: String,
+  category: {
+    type: String,
+    enum: ['landmark', 'music', 'park', 'station', 'airport'],
+    default: 'landmark',
+  },
   latitude: String,
   longitude: String,
   url: String,
