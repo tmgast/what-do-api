@@ -1,11 +1,8 @@
-const supertest = require('supertest');
-const { initDB, shutdownDB, getDBInstance } = require('../providers/db');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('../app');
-const request = supertest(app);
+const { initDB, getDBInstance } = require("../providers/db");
+const { MongoMemoryServer } = require("mongodb-memory-server");
 
 beforeAll(async () => {
-  if (process.platform === 'android') {
+  if (process.platform === "android" || process.platform === "linux") {
     return await initDB();
   } else {
     db = await MongoMemoryServer.create();
@@ -14,10 +11,9 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (process.platform !== 'android') {
-    console.log('safe delete');
+  if (process.platform !== "android") {
+    console.log("safe delete");
   }
-  // console.log(getDBInstance().connection);
+  await getDBInstance().connection.dropDatabase();
   await getDBInstance().connection.close();
 });
-

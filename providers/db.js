@@ -1,5 +1,5 @@
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 
 let db = null;
 
@@ -11,12 +11,12 @@ const initDB = async function (memDB) {
 
   const uri = memDB || process.env.DB;
 
-  await mongoose.connect(uri, {
+  mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
   db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'MongoDb connection error:'));
+  db.on("error", console.error.bind(console, "MongoDb connection error:"));
   return db;
 };
 

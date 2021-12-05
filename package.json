@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.25.3",
     "faker": "^5.5.3",
     "jest": "^27.3.1",
-    "mongodb-memory-server": "^8.0.2",
+    "mongodb-memory-server": "^8.0.4",
     "nodemon": "^2.0.15",
     "supertest": "^6.1.6"
   }
