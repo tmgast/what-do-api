@@ -13,6 +13,12 @@ const location = {
   url: "https://google.com",
 };
 
+const hollow_location = {
+  name: "Test2",
+  lat: "35.000000",
+  lon: "45.000000",
+};
+
 it("POST /locations/gm --> created location", async () => {
   expect.assertions(4);
   const data = await request.post("/locations/gm")
@@ -24,6 +30,16 @@ it("POST /locations/gm --> created location", async () => {
   expect(data.body.name).toEqual("NIFREL");
   expect(data.body.latitude).toEqual("34.8062981");
   expect(data.body.longitude).toEqual("135.5336441");
+});
+
+it("POST /locations --> created location with minimal info", async () => {
+  expect.assertions(4);
+  const data = await request.post("/locations").send(hollow_location);
+
+  expect(data.status).toBe(200);
+  expect(data.body.name).toEqual("Test2");
+  expect(data.body.latitude).toEqual("35.000000");
+  expect(data.body.longitude).toEqual("45.000000");
 });
 
 it("POST /locations --> created location", async () => {
@@ -74,13 +90,35 @@ it("DELETE /locations/:id --> delete location", async () => {
 it("DELETE /locations/:name/byName --> delete location by name", async () => {
   expect.assertions(1);
   await request
-    .delete("/locations/Osaka%20Castle/byName")
+    .delete("/locations/byName/Osaka%20Castle")
     .expect(200)
     .then((res) => {
       expect(res.body.deletedCount).toEqual(1)
     });
 });
 
+it("PUT /locations/:id --> update Location", async () => {
+  expect.assertions(1);
+  const data = await request
+    .put("/locations/d216bba6-a181-474a-ad26-2fc6f6e5f609")
+    .send({ name: "Cheese Hut" })
+    .expect(200)
+    .then((res) => {
+      expect(res.body.name).toEqual("Cheese Hut");
+    });
+});
+
 it("GET /locations/:id --> 404 when not found", () => {});
 
-it("PUT /locations/:id --> update Location", () => {});
+it("POST /locations/gm --> 500 invalid GMaps URL", async () => {
+  expect.assertions(2);
+  const data = await request.post("/locations/gm")
+    .send({
+      "url": "https://www.facebook.com"
+    });
+
+  expect(data.status).toBe(500);
+  expect(data.body).toEqual({message: "Invalid URL"});
+});
+
+// need more tests for fail-cases
