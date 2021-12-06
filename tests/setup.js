@@ -4,11 +4,15 @@ const { seed } = require("../seeders/locations");
 
 let db,
   con = null;
+let seeded = false;
 
 beforeAll(async () => {
   if (process.platform === "android" || process.platform === "linux") {
     con = await initDB();
-    await seed(con);
+    if(!seeded){
+      await seed(con);
+        seeded = true;
+    }
     return con;
   } else {
     db = await MongoMemoryServer.create();
@@ -22,6 +26,6 @@ afterAll(async () => {
   if (process.platform !== "android") {
     console.log("safe delete");
   }
-  // await getDBInstance().connection.dropDatabase();
+  await getDBInstance().connection.dropDatabase();
   await getDBInstance().connection.close();
 });

@@ -15,7 +15,7 @@ async function seed() {
 const locationSeeds = [];
 locationSeeds.push(
   new Location({
-    id: "12cac8b1-dbe3-40db-bbf4-f55a3f2a5431",
+    _id: "12cac8b1-dbe3-40db-bbf4-f55a3f2a5431",
     name: "Osaka Castle",
     category: "landmark",
     latitude: "34.6864842",
@@ -26,7 +26,7 @@ locationSeeds.push(
 
 locationSeeds.push(
   new Location({
-    id: "d216bba6-a181-474a-ad26-2fc6f6e5f609",
+    _id: "d216bba6-a181-474a-ad26-2fc6f6e5f609",
     name: "The Symphony Hall",
     category: "music",
     latitude: "34.7014543",
@@ -37,7 +37,7 @@ locationSeeds.push(
 
 locationSeeds.push(
   new Location({
-    id: "e788b107-2e5e-44fe-99f5-f9d343e6a994",
+    _id: "e788b107-2e5e-44fe-99f5-f9d343e6a994",
     name: "Universal Studios Japan",
     category: "park",
     latitude: "34.6664671",
