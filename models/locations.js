@@ -19,8 +19,9 @@ const LocationSchema = new Schema({
 
 LocationSchema.virtual('id').set((value) => {
   if (value === null) {
-    this._id = uuidv4();
+    return uuidv4();
   }
+  return value;
 });
 
 module.exports = mongoose.model('Location', LocationSchema);

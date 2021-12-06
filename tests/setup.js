@@ -1,4 +1,4 @@
-const { initDB, getDBInstance } = require("../providers/db");
+const { initDB, getDBInstance, shutdownDB } = require("../providers/db");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const { seed } = require("../seeders/locations");
 
@@ -23,9 +23,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (process.platform !== "android") {
-    console.log("safe delete");
+  if (process.env.NODE_ENV === 'test') {
+    await getDBInstance().connection.dropDatabase();
   }
-  await getDBInstance().connection.dropDatabase();
-  await getDBInstance().connection.close();
+  await shutdownDB();
 });
