@@ -13,7 +13,7 @@ const location = {
   url: "https://google.com",
 };
 
-await it("POST /locations --> created location", async () => {
+it("POST /locations --> created location", async () => {
   expect.assertions(5);
   const data = await request.post("/locations").send(location);
 
@@ -40,20 +40,22 @@ it("GET /locations --> array locations", async () => {
 it("GET /locations/:id --> find location", async () => {
   expect.assertions(1);
   await request
-    .get(`/locations/${testUUID}`)
+    .get(`/locations/e788b107-2e5e-44fe-99f5-f9d343e6a994`)
     .expect(200)
     .then((res) => {
       res.body = JSON.parse(res.text);
-      expect(res.body._id).toEqual(location._id);
+      expect(res.body._id).toEqual("e788b107-2e5e-44fe-99f5-f9d343e6a994");
     });
 });
 
 it("DELETE /locations/:id --> delete location", async () => {
   expect.assertions(1);
   await request
-    .delete("/locations/" + testUUID)
+    .delete("/locations/e788b107-2e5e-44fe-99f5-f9d343e6a994")
     .expect(200)
-    .then((res) => expect(res.body._id).toEqual(location._id));
+    .then((res) =>
+      expect(res.body._id).toEqual("e788b107-2e5e-44fe-99f5-f9d343e6a994")
+    );
 });
 
 it("GET /locations/:id --> 404 when not found", () => {});
