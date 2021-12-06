@@ -13,6 +13,19 @@ const location = {
   url: "https://google.com",
 };
 
+it("POST /locations/gm --> created location", async () => {
+  expect.assertions(4);
+  const data = await request.post("/locations/gm")
+    .send({
+      "url": "https://www.google.com/maps/place/NIFREL,+2-1+Senribanpakukoen,+Suita,+Osaka+565-0826/@34.8062981,135.5336441,16z/data=!4m2!3m1!1s0x6000fcad50479643:0xd55fc65092ad11c7"
+    });
+
+  expect(data.status).toBe(200);
+  expect(data.body.name).toEqual("NIFREL");
+  expect(data.body.latitude).toEqual("34.8062981");
+  expect(data.body.longitude).toEqual("135.5336441");
+});
+
 it("POST /locations --> created location", async () => {
   expect.assertions(5);
   const data = await request.post("/locations").send(location);
@@ -58,8 +71,16 @@ it("DELETE /locations/:id --> delete location", async () => {
     );
 });
 
-it("GET /locations/:id --> 404 when not found", () => {});
+it("DELETE /locations/:name/byName --> delete location by name", async () => {
+  expect.assertions(1);
+  await request
+    .delete("/locations/Osaka%20Castle/byName")
+    .expect(200)
+    .then((res) => {
+      expect(res.body.deletedCount).toEqual(1)
+    });
+});
 
-it("GET /locations --> ", () => {});
+it("GET /locations/:id --> 404 when not found", () => {});
 
 it("PUT /locations/:id --> update Location", () => {});

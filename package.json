@@ -11,6 +11,11 @@
     "setupFilesAfterEnv": [
       "./tests/setup.js"
     ],
+    "collectCoverageFrom": [
+      "routes/**.js",
+      "models/**.js",
+      "providers/**.js"
+    ],
     "testEnvironment": "node"
   },
   "config": {
