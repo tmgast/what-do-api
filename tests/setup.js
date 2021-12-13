@@ -5,6 +5,8 @@ const { seed } = require("../seeders/locations");
 let db,
   con = null;
 
+let bSeeded = false;
+
 beforeAll(async () => {
   if (process.platform === "android") {
     con = await initDB();
@@ -13,7 +15,11 @@ beforeAll(async () => {
   } else {
     db = await MongoMemoryServer.create();
     con = await initDB(db.getUri());
-    await seed(con);
+
+    if (!bSeeded) {
+      await seed(con);
+      bSeeded = true;
+    }
     return con;
   }
 });
