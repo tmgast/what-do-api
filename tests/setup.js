@@ -6,9 +6,9 @@ let db,
   con = null;
 
 beforeAll(async () => {
-  if (process.platform === "android" || process.platform === "linux") {
+  if (process.platform === "android") {
     con = await initDB();
-      await seed(con);
+    await seed(con);
     return con;
   } else {
     db = await MongoMemoryServer.create();
@@ -19,7 +19,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === "test") {
     await getDBInstance().connection.dropDatabase();
   }
   await shutdownDB();

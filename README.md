@@ -20,7 +20,7 @@ They can create an itinerary (trip planning) by manually adding locations.
 They can create an itinerary completely at random by applying constraints.
 They can add friends and invite friends to join an itinerary.
 
-## Rooadmap
+## Roadmap
 
 - [x] Locations
   - [x] GET by id
