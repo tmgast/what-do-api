@@ -1,18 +1,21 @@
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 
 let db = null;
 
 dotenv.config();
 
 const getDB = () => {
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === "test") {
     return process.env.DB_TEST;
   }
   return process.env.DB_NAME;
 };
 
-const buildConnection = () => `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}/${getDB()}?retryWrites=true&w=majority`;
+const buildConnection = () =>
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
+    process.env.DB_CLUSTER
+  }/${getDB()}?retryWrites=true&w=majority`;
 
 async function initDB(memDB) {
   if (db !== null) {
@@ -26,7 +29,7 @@ async function initDB(memDB) {
     useUnifiedTopology: true,
   });
   db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'MongoDb connection error:'));
+  db.on("error", console.error.bind(console, "MongoDb connection error:"));
   return db;
 }
 

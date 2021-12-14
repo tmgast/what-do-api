@@ -10,42 +10,13 @@ router.get("/", async (req, res) => {
   res.send(await Locations.find());
 });
 
-/* GET Location listing */
-router
-  .route("/:id")
-  .get(async (req, res) => {
-    Locations.findById(req.params.id).then((locs) => res.json(locs));
-  })
-
-  /* PUT Location listing */
-  .put(async (req, res) => {
-    Locations.findOneAndUpdate(req.params.id, req.body, {
-      returnOriginal: false,
-    }).then((locs) => {
-      res.json(locs);
-    });
-  })
-
-  /* DELETE Location by id */
-  .delete((req, res) => {
-    Locations.findOneAndDelete({ _id: req.params.id }).then((loc) =>
-      res.json(loc)
-    );
-  });
-
-/* DELETE Location by name */
-router.delete("/byName/:name", (req, res) => {
-  Locations.deleteMany({ name: decodeURIComponent(req.params.name) }).then(
-    (loc) => res.json(loc)
-  );
-});
-
 /* GET find location by options */
 router.get("/findByOptions", async (req, res) => {
+  console.log("data: ", req.query);
   try {
-    Locations.find(req.data).then(res.json(locs));
+    Locations.find(req.query).then((locs) => res.json(locs));
   } catch (err) {
-    res.json({ message: "Invalid Parameters" });
+    res.json({ message: err.message });
   }
 });
 
@@ -86,6 +57,36 @@ router.post("/gm", (req, res) => {
 
   location.save();
   return res.json(location);
+});
+
+/* GET Location listing */
+router
+  .route("/:id")
+  .get(async (req, res) => {
+    Locations.findById(req.params.id).then((locs) => res.json(locs));
+  })
+
+  /* PUT Location listing */
+  .put(async (req, res) => {
+    Locations.findOneAndUpdate(req.params.id, req.body, {
+      returnOriginal: false,
+    }).then((locs) => {
+      res.json(locs);
+    });
+  })
+
+  /* DELETE Location by id */
+  .delete((req, res) => {
+    Locations.findOneAndDelete({ _id: req.params.id }).then((loc) =>
+      res.json(loc)
+    );
+  });
+
+/* DELETE Location by name */
+router.delete("/byName/:name", (req, res) => {
+  Locations.deleteMany({ name: decodeURIComponent(req.params.name) }).then(
+    (loc) => res.json(loc)
+  );
 });
 
 module.exports = router;
