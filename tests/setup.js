@@ -1,5 +1,5 @@
 const { initDB, getDBInstance, shutdownDB } = require("../providers/db");
-const { MongoMemoryServer } = require("mongodb-memory-server");
+const { MongoMemoryServer } = require("mongodb-memory-server-core");
 const { seed } = require("../seeders/locations");
 
 let db,

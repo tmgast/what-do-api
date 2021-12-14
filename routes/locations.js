@@ -13,8 +13,11 @@ router.get("/", async (req, res) => {
 /* GET find location by options */
 router.get("/findByOptions", async (req, res) => {
   console.log("data: ", req.query);
+
   try {
-    Locations.find(req.query).then((locs) => res.json(locs));
+    Locations.find({ $text: { $search: req.query.search } }).then((locs) =>
+      res.json(locs)
+    );
   } catch (err) {
     res.json({ message: err.message });
   }
