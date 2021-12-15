@@ -22,15 +22,17 @@ They can add friends and invite friends to join an itinerary.
 
 ## Roadmap
 
+- [ ] implement repository pattern to simplify route files
 - [x] Locations
   - [x] GET by id
   - [x] GET all
-  - [ ] GET by options
+  - [x] GET by options
   - [x] PUT update by id
   - [x] POST create
   - [x] POST create by g-maps URL
   - [x] DELETE by id
-  - [ ] GET randomizer
+  - [x] GET randomizer
+  - [ ] allow more verbose filtering options and inclusive traits
 - [ ] Users
   - [ ] POST (login) find or create by Google ID
   - [ ] PUT update profile
