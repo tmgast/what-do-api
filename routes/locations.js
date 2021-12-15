@@ -11,12 +11,25 @@ router.get("/", async (req, res) => {
 });
 
 /* GET find location by options */
-router.get("/findByOptions", async (req, res) => {
-  console.log("data: ", req.query);
+router.get("/search", async (req, res) => {
+  console.log("data: ", req.query.search);
 
   try {
     Locations.find({ $text: { $search: req.query.search } }).then((locs) =>
       res.json(locs)
+    );
+  } catch (err) {
+    res.json({ message: err.message });
+  }
+});
+
+/* GET recommend single result by limitations */
+router.get("/random", async (req, res) => {
+  console.log("data: ", req.query);
+
+  try {
+    Locations.find().then((locs) =>
+      res.json(locs[Math.round(Math.random() * locs.length)])
     );
   } catch (err) {
     res.json({ message: err.message });
