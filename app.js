@@ -1,27 +1,29 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const locationsRouter = require('./routes/locations');
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const locationsRouter = require("./routes/locations");
+const categoriesRouter = require("./routes/categories");
 
 const app = express();
 dotenv.config();
 
-app.disable('etag');
+app.disable("etag");
 app.use(cors());
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/locations', locationsRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/categories", categoriesRouter);
+app.use("/locations", locationsRouter);
 
 module.exports = app;

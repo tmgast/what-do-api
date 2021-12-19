@@ -46,4 +46,4 @@ locationSeeds.push(
   })
 );
 
-module.exports.seed = seed;
+module.exports.seedLocations = seed;
