@@ -7,6 +7,7 @@ const CategorySchema = new Schema({
   _id: { type: String, default: uuidv4 },
   name: String,
   icon: String,
+  colorClass: String,
 });
 
 CategorySchema.virtual("id").set((value) => {

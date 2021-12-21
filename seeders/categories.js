@@ -17,6 +17,7 @@ categorySeeds.push(
   new Category({
     name: "landmark",
     icon: "temple_buddhist",
+    colorClass: "cyan darken-1",
   })
 );
 
@@ -24,6 +25,7 @@ categorySeeds.push(
   new Category({
     name: "music",
     icon: "theater_comedy",
+    colorClass: "light-green darken-1",
   })
 );
 
@@ -31,6 +33,7 @@ categorySeeds.push(
   new Category({
     name: "park",
     icon: "attractions",
+    colorClass: "green darken-2",
   })
 );
 
@@ -38,6 +41,7 @@ categorySeeds.push(
   new Category({
     name: "station",
     icon: "subway",
+    colorClass: "indigo darken-2",
   })
 );
 
