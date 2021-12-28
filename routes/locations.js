@@ -7,7 +7,14 @@ initDB();
 
 /* GET Locations listing. */
 router.get("/", async (req, res) => {
-  res.send(await Locations.find());
+  const lat = Number(req.query.lat);
+  const lon = Number(req.query.lon);
+  const zMod = 10000 / Math.pow(10, Number(req.query.zoom) / 2.5);
+  const query = {
+    latitude: { $gte: lat - zMod, $lte: lat + zMod },
+    longitude: { $gte: lon - zMod, $lte: lon + zMod },
+  };
+  res.send(await Locations.find(query));
 });
 
 /* GET find location by options */
