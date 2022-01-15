@@ -1,6 +1,6 @@
-const express = require("express");
-const Locations = require("../models/locations");
-const { initDB } = require("../providers/db");
+import express from "express";
+import Locations from "../models/locations";
+import { initDB } from "../providers/db";
 
 const router = express.Router();
 initDB();

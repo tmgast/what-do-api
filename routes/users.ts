@@ -1,5 +1,5 @@
-const express = require('express');
-const createError = require('http-errors');
+import express from "express";
+import createError from 'http-errors';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 /* GET users listing. */
 router.get('/:id', (req, res, next) => {
-  const user = users.find((u) => u.id === req.id);
+  const user = users.find((u) => u.id === req["id"]);
   if (!user) {
     next(createError(404, 'Not Found'));
   }
