@@ -24,10 +24,7 @@ async function initDB(memDB) {
 
   const uri = memDB || buildConnection();
 
-  mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  mongoose.connect(uri);
   db = mongoose.connection;
   db.on("error", console.error.bind(console, "MongoDb connection error:"));
   return db;

@@ -20,7 +20,9 @@ locationsRouter.get("/", async (req, res) => {
 /* GET find location by options */
 locationsRouter.get("/search", async (req, res) => {
   try {
-    Locations.find({ $text: { $search: req.query.search } }).then((locs) =>
+    const q = req.query.search;
+    Locations.find({ name: { $search: q } })
+    .then((locs) =>
       res.json(locs)
     );
   } catch (err) {

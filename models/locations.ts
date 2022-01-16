@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 const { Schema } = mongoose;
 
@@ -17,11 +17,13 @@ const LocationSchema = new Schema({
   rating: { type: Number, default: 0 },
 });
 
-LocationSchema.virtual('id').set((value) => {
+LocationSchema.index({name: 'text'});
+
+LocationSchema.virtual('id').set((value: string) => {
   if (value === null) {
     return uuidv4();
   }
   return value;
 });
 
-module.exports = mongoose.model('Location', LocationSchema);
+export default mongoose.model('Location', LocationSchema);

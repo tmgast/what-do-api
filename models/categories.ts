@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
+import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 const { Schema } = mongoose;
 
@@ -10,7 +10,7 @@ const CategorySchema = new Schema({
   colorClass: String,
 });
 
-CategorySchema.virtual("id").set((value) => {
+CategorySchema.virtual("id").set((value: string) => {
   if (value === null) {
     return uuidv4();
   }
