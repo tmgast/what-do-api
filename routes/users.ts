@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import createError from 'http-errors';
 
-const router = express.Router();
+const usersRouter = Router();
 
 const users = [{
   id: '1',
@@ -12,12 +12,12 @@ const users = [{
 }];
 
 /* GET users listing. */
-router.get('/', (req, res) => {
+usersRouter.get('/', (req, res) => {
   res.json(users);
 });
 
 /* GET users listing. */
-router.get('/:id', (req, res, next) => {
+usersRouter.get('/:id', (req, res, next) => {
   const user = users.find((u) => u.id === req["id"]);
   if (!user) {
     next(createError(404, 'Not Found'));
@@ -26,7 +26,7 @@ router.get('/:id', (req, res, next) => {
   res.json(user);
 });
 
-router.post('/', (req, res) => {
+usersRouter.post('/', (req, res) => {
   const user = {
     id: req.body.id,
     name: req.body.name,
@@ -35,4 +35,4 @@ router.post('/', (req, res) => {
   res.json(user);
 });
 
-module.exports = router;
+export default usersRouter;

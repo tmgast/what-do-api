@@ -1,10 +1,10 @@
-import express from "express";
+import { Router } from "express";
 
-const router = express.Router();
+const indexRouter = Router();
 
 /* GET home page. */
-router.get('/', (req, res) => {
+indexRouter.get('/', (req, res) => {
   res.json('{ message: "success" }');
 });
 
-module.exports = router;
+export default indexRouter;

@@ -1,13 +1,13 @@
-import express from "express";
+import { Router } from "express";
 import Categories from "../models/categories";
 import { initDB } from "../providers/db";
 
-const router = express.Router();
+const categoriesRouter = Router();
 initDB();
 
 /* GET Categories listing. */
-router.get("/", async ({ res }) => {
+categoriesRouter.get("/", async (req, res) => {
   res.send(await Categories.find());
 });
 
-module.exports = router;
+export default categoriesRouter;

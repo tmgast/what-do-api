@@ -1,12 +1,12 @@
-import express from "express";
+import { Router } from "express";
 import Locations from "../models/locations";
 import { initDB } from "../providers/db";
 
-const router = express.Router();
+const locationsRouter = Router();
 initDB();
 
 /* GET Locations listing. */
-router.get("/", async (req, res) => {
+locationsRouter.get("/", async (req, res) => {
   const lat = Number(req.query.lat);
   const lon = Number(req.query.lon);
   const zMod = 10000 / Math.pow(10, Number(req.query.zoom) / 2.5);
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 /* GET find location by options */
-router.get("/search", async (req, res) => {
+locationsRouter.get("/search", async (req, res) => {
   try {
     Locations.find({ $text: { $search: req.query.search } }).then((locs) =>
       res.json(locs)
@@ -29,7 +29,7 @@ router.get("/search", async (req, res) => {
 });
 
 /* GET recommend single result by limitations */
-router.get("/random", async (req, res) => {
+locationsRouter.get("/random", async (req, res) => {
   try {
     Locations.find({
       $text: { $search: req.query.search },
@@ -41,7 +41,7 @@ router.get("/random", async (req, res) => {
 });
 
 /* POST new Location */
-router.post("/", async (req, res) => {
+locationsRouter.post("/", async (req, res) => {
   const loc = {
     name: req.body.name,
     latitude: req.body.lat,
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
   };
 
   if (req.body.id) {
-    loc.id = req.body.id;
+    loc["id"] = req.body.id;
   }
 
   const location = new Locations(loc);
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 });
 
 /* POST new Location parsing Google Maps URL */
-router.post("/gm", (req, res) => {
+locationsRouter.post("/gm", (req, res) => {
   if (!req.body.url.match("https://www.google.com/maps/place")) {
     return res.status(500).json({ message: "Invalid URL" });
   }
@@ -69,9 +69,9 @@ router.post("/gm", (req, res) => {
     /https:\/\/www.google.com\/maps\/place\/(.*?)(,.*)?\/@(.*?),(.*?),.*/m;
   const data = regex.exec(req.body.url);
   const location = new Locations({
-    name: data[1],
-    latitude: data[3],
-    longitude: data[4],
+    name: data![1],
+    latitude: data![3],
+    longitude: data![4],
     url: req.body.url,
   });
 
@@ -80,7 +80,7 @@ router.post("/gm", (req, res) => {
 });
 
 /* GET Location listing */
-router
+locationsRouter
   .route("/:id")
   .get(async (req, res) => {
     Locations.findById(req.params.id).then((locs) => res.json(locs));
@@ -88,7 +88,7 @@ router
 
   /* PUT Location listing */
   .put(async (req, res) => {
-    Locations.findOneAndUpdate(req.params.id, req.body, {
+    Locations.findOneAndUpdate(req.params["id"], req.body, {
       returnOriginal: false,
     }).then((locs) => {
       res.json(locs);
@@ -103,10 +103,10 @@ router
   });
 
 /* DELETE Location by name */
-router.delete("/byName/:name", (req, res) => {
+locationsRouter.delete("/byName/:name", (req, res) => {
   Locations.deleteMany({ name: decodeURIComponent(req.params.name) }).then(
     (loc) => res.json(loc)
   );
 });
 
-module.exports = router;
+export default locationsRouter;

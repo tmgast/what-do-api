@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+      "target": "ESNEXT",
+      "module": "commonjs",
+      "outDir": "dist",
+      "strict": true,
+      "noImplicitAny": false,
+      "useUnknownInCatchVariables": false,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "strictPropertyInitialization": false,
+      "noUnusedParameters": false,
+      "noImplicitReturns": false,
+      "baseUrl": "src",
+      "types": ["node", "express"],
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+      "node_modules",
+      "dist",
+      "test"
+  ]
+}
