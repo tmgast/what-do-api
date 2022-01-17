@@ -1,7 +1,7 @@
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+import dotenv from "dotenv";
+import * as mongoose from "mongoose";
 
-let db = null;
+let db: mongoose.Connection;
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ const buildConnection = () =>
     process.env.DB_CLUSTER
   }/${getDB()}?retryWrites=true&w=majority`;
 
-async function initDB(memDB) {
+async function initDB(memDB: string) {
   if (db !== null) {
     return db;
   }
@@ -32,7 +32,7 @@ async function initDB(memDB) {
 
 async function shutdownDB() {
   await db.close();
-  db = null;
+  db = <mongoose.Connection>{};
 }
 
 module.exports.initDB = initDB;

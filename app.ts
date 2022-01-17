@@ -25,7 +25,7 @@ app.use("/categories", categoriesRouter);
 app.use("/locations", locationsRouter);
 
 app.listen(3000, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${3000}`);
+  console.log(`Server is running at https://localhost:${3000}`);
 });
 
 module.exports = app;
